@@ -7,58 +7,62 @@ import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
     private EditText fahrenheitIn;
     private TextView celsiusOut;
 
     private SharedPreferences savedValues;
 
-    private String billAmountString = "";
-    private float tipPercent = .15f;
+    private String fahrenheitInString = "";
+    private float celsiusOutFloat = .2f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // get widgits
+        // get widgets
         fahrenheitIn = (EditText) findViewById(R.id.txtFahrenheitIn);
         celsiusOut = (TextView) findViewById(R.id.lblCelsiusOut);
 
         // set listener
-        fahrenhietIn.setOnEventActionListener(this);
+        fahrenheitIn.setOnEditorActionListener(this);
+
+        savedValues = getSharedPreferences("SavedValues", MODE_PRIVATE);
     }
 
-    public boolean onEventAction(TextView v, int actionId, KeyEvent event) {
-        if (actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
-            celsiusOut.setText(fahrenhietIn.toCelsius().toString());
-        }
-        return false;
+    public void setCelsius() {
+        fahrenheitInString = fahrenheitIn.getText().toString();
+        float fehren;
+        fehren = float.parseFloat(fahrenheitInString);
     }
-    
+
     @Override
     public void onPause() {
         Editor editor = savedValues.edit();
-        editor.putString("fahrenheitIn", fahrenheitIn);
-        editor.putFloat("celsiusOut", celsiusOut);
-        editor.commit();     
-        
+        editor.putString("fahrenheitIn", fahrenheitInString);
+        editor.putFloat("celsiusOut", celsiusOutFloat);
+        editor.commit();
+
         super.onPause();
     }
 
-    @Override 
-    public void onResume() { 
-        fahrenheitIn = savedValues.getString("fahrenheitIn", ""); 
-        tipPercent = savedValues.getFloat("celsiusOut", 0.2f); 
+    @Override
+    public void onResume() {
+        fahrenheitInString = savedValues.getString("fahrenheitInString", "");
+        celsiusOutFloat = savedValues.getFloat("celsiusOutFloat", 0.2f);
 
-        super.onResume(); 
+        super.onResume();
     }
 
-    public static double toCelsius(double fahrenhiet) {
-        return (fahrenhiet - 32) * 5 / 9;
+    @Override
+    public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+        if (actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
+            setCelsius();
+        }
+        return false;
     }
 }
