@@ -8,10 +8,17 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 public class MainActivity extends AppCompatActivity {
     private EditText fahrenheitIn;
     private TextView celsiusOut;
+
+    private SharedPreferences savedValues;
+
+    private String billAmountString = "";
+    private float tipPercent = .15f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean onEventAction(TextView v, int actionId, KeyEvent event) {
-        if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
-            celsiusOut.setText(toCelsius(fahrenhietIn).toString());
+        if (actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
+            celsiusOut.setText(fahrenhietIn.toCelsius().toString());
         }
         return false;
     }
@@ -38,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Editor editor = savedValues.edit();
         editor.putString("fahrenheitIn", fahrenheitIn);
         editor.putFloat("celsiusOut", celsiusOut);
-        editor.commit();         
+        editor.commit();     
         
         super.onPause();
     }
