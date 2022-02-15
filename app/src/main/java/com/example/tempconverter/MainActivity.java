@@ -1,7 +1,6 @@
 package com.example.tempconverter;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
@@ -11,11 +10,14 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 public class MainActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
+    // declare fahrenheit & celsuis values
     private EditText fahrenheitIn;
     private TextView celsiusOut;
 
+    // create sharedPreferences obj
     private SharedPreferences savedValues;
 
+    // create a string & float
     private String fahrenheitInString = "";
     private float celsiusOutFloat = .2f;
 
