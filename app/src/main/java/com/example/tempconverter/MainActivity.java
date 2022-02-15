@@ -2,13 +2,12 @@ package com.example.tempconverter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-    import android.widget.TextView.OnEditorActionListener;
+import android.widget.TextView.OnEditorActionListener;
 
 public class MainActivity extends AppCompatActivity {
     private EditText fahrenheitIn;
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     
     @Override
     public void onPause() {
-        SharedPreferences.Editor editor = savedValues.edit();
+        Editor editor = savedValues.edit();
         editor.putString("fahrenheitIn", fahrenheitIn);
         editor.putFloat("celsiusOut", celsiusOut);
         editor.commit();         
@@ -46,12 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override 
     public void onResume() { 
-        super.onResume(); 
-
-        // get the instance variables 
-        billAmountString = savedValues.getString( 
-            "fahrenheitIn", ""); 
+        fahrenheitIn = savedValues.getString("fahrenheitIn", ""); 
         tipPercent = savedValues.getFloat("celsiusOut", 0.2f); 
+
+        super.onResume(); 
     }
 
     public static double toCelsius(double fahrenhiet) {
