@@ -2,6 +2,7 @@ package com.example.tempconverter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
@@ -28,16 +29,16 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onEventAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
-            celsiusOut.setText(fahrenhietIn.toCelsius().toString());
+            celsiusOut.setText(toCelsius(fahrenhietIn).toString());
         }
         return false;
     }
     
     @Override
     public void onPause() {
-        Editor editor = savedValues.edit();         
-        editor.putString("fahrenheitIn", fahrenheitIn); 
-        editor.putFloat("celsiusOut", celsiusOut); 
+        SharedPreferences.Editor editor = savedValues.edit();
+        editor.putString("fahrenheitIn", fahrenheitIn);
+        editor.putFloat("celsiusOut", celsiusOut);
         editor.commit();         
         
         super.onPause();
