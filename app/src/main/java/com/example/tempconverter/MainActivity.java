@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         fahrenheitInString = fahrenheitIn.getText().toString();
         float fehren;
         fehren = float.parseFloat(fahrenheitInString);
+        celsiusOut.setText((fehren - 32) * 5 / 9);
     }
 
     @Override
