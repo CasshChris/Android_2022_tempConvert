@@ -4,5 +4,6 @@
     <string name="_100">100</string>
     <string name="fahrenheit">Fahrenheit</string>
     <string name="celsius">Celsius</string>
-    <string name="_37_778">37.778</string>
+    <string name="_37_78">37.78</string>
+    <string name="temperature">Temperature</string>
 </resources>

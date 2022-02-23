@@ -10,7 +10,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 public class MainActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
-    // declare fahrenheit & celsuis values
+    // declare fahrenheit & Celsius values
     private EditText fahrenheitIn;
     private TextView celsiusOut;
 
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 
     // create a string & float
     private String fahrenheitInString = "";
-    private float celsiusOutFloat = .2f;
+    private float celsiusOutFloat = .5f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +38,19 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 
     public void setCelsius() {
         fahrenheitInString = fahrenheitIn.getText().toString();
-        float fehren;
-        fehren = float.parseFloat(fahrenheitInString);
-        celsiusOut.setText((fehren - 32) * 5 / 9);
+        float fahren;
+        if (fahrenheitInString.equals("")) {
+            fahren = 0;
+        } else {
+            fahren = Float.parseFloat(fahrenheitInString);
+        }
+        float converted = convCelsius(fahren);
+
+        celsiusOut.setText("" + converted);
+    }
+
+    public float convCelsius(float fahrenheit) {
+        return (fahrenheit - 32) * 5 / 9;
     }
 
     @Override
@@ -56,14 +66,14 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     @Override
     public void onResume() {
         fahrenheitInString = savedValues.getString("fahrenheitInString", "");
-        celsiusOutFloat = savedValues.getFloat("celsiusOutFloat", 0.2f);
+        celsiusOutFloat = savedValues.getFloat("celsiusOutFloat", 0.5f);
 
         super.onResume();
     }
 
     @Override
     public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-        if (actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
             setCelsius();
         }
         return false;
